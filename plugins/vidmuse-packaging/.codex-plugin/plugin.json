@@ -1,15 +1,15 @@
 {
   "name": "udoks-packaging",
   "version": "0.2.17",
-  "description": "Create, package, and recut VidMuse projects, including script- and Style-directed H3 AI music videos, generation-first reusable IP-led films, focused product skills, 162 locally installable Shotcraft effects, on-demand official VidMuse CLI setup for production accounts, and official HyperFrames domain skills.",
+  "description": "UDOKS Animation Platform agent workflows for planning, designing, assembling, reviewing, and rendering cinematic animation and video projects.",
   "author": {
-    "name": "VidMuse"
+    "name": "UDOKS"
   },
   "skills": "./skills/",
   "interface": {
-    "displayName": "UDOKS Packaging",
-    "shortDescription": "Design and package creator-led videos",
-    "longDescription": "A minimal VidMuse architecture with dedicated Create, Recut, AI MV, IP, and Vox workflows; treatment-level MV scripting, live visual Style selection, production-design continuity, SOTA image-reference direction, H3 audio-reference shots, beat and lyric timing, and immediate Timeline review as generated sequences grow; focused design and semantic-motion capabilities; a bilingual local library of 162 installable HyperFrames Shotcraft treatments; a dedicated CLI skill that resolves or installs the official executable and uses production-account authentication; and pinned HyperFrames domain skills.",
+    "displayName": "UDOKS Animation Platform",
+    "shortDescription": "Create and direct cinematic animations",
+    "longDescription": "An animation-first creative workspace with story development, scene planning, camera choreography, AI music video workflows, reusable character/IP direction, motion design, shot treatments, local preview, and Timeline assembly. Existing VidMuse workflows remain as the production engine while the product experience is organized around UDOKS creator projects.",
     "developerName": "UDOKS",
     "category": "Creativity",
     "brandColor": "#8B5CF6",
@@ -17,12 +17,12 @@
     "logo": "./assets/logo.png",
     "capabilities": ["Read", "Write"],
     "defaultPrompt": [
-      "Create a designed video from this idea",
-      "Recut this speaking video",
-      "Create a 16:9 AI music video from my song or generate the song first",
-      "Create a reusable IP character and an IP-led knowledge video",
-      "Make a paper-collage film from this script",
-      "Open this project in VidMuse Timeline"
+      "Create a cinematic 15-second animation for TikTok from my reference image",
+      "Turn my song into a storyboarded AI music video",
+      "Build a character transformation sequence and preserve identity",
+      "Design a UD🏀KA / YSL ENT logo reveal with cinematic motion",
+      "Turn this idea into a scene-by-scene animation plan",
+      "Review and prepare my animation for export"
     ]
   }
 }

@@ -1,24 +1,25 @@
 # UDOKS Animation Platform
 
-Mobile-friendly creative workspace for text-to-video planning, cinematic photo motion, storyboards, and UD🏀KA / YSL ENT content.
+Mobile-friendly creative workspace for UD🏀KA / YSL ENT music-video pre-production, text-to-video planning, cinematic photo motion, and storyboards.
 
 ## What is implemented
 
 - Responsive dashboard, project gallery, workspace navigation, and storyboard scene planning.
-- Animation brief builder for prompts, visual direction, duration, aspect ratio, camera movement, and brand text.
-- **Text to Video:** prompt builder with optional negative prompt, visual style, camera move, duration, aspect ratio, branding, live brief preview, copy-to-clipboard, and JSON brief export.
-- **Animate Photo:** client-side Ken Burns-style camera motion (push-in, pull-back, pan, float, pulse) applied to a user-selected still image.
+- Animation brief builder and **Text to Video** prompt builder with visual style, camera movement, duration, aspect ratio, branding, live preview, copy action, and JSON brief export.
+- **Music Video Studio:** track/artist/label fields, song file selection and local audio preview, duration read from audio metadata when supported, optional BPM field, format/style/concept/identity notes, a seven-part starter shot list, editable shot descriptions and camera moves, estimated scene time ranges, per-shot prompt copying, production JSON export, and prompt TXT export.
+- Audio is processed locally by the browser for preview/metadata; the prototype does not upload the track.
+- **Animate Photo:** client-side Ken Burns-style camera motion (push-in, pull-back, pan, float, pulse) applied to a selected still image.
 - **Local WebM export:** uses Canvas capture and browser MediaRecorder where supported. The clip animates a still image; it does not generate new AI frames. Browser/device support varies; MP4 conversion is not built in.
-- Local reference-image preview; the selected photo is not uploaded by the static prototype.
 - Motion prompt presets, character-continuity prompt helpers, and export checklists.
 
 ## What is not implemented yet
 
-- No real text-to-video or image-to-video generation provider is connected. The Text to Video page creates a local brief; the status intentionally says the provider is not connected.
-- No login, cloud project persistence, server-side asset upload, billing, job queue, or backend MP4 rendering.
-- Project cards and planning data are prototype/demo data and do not persist to a database.
-- The photo animator moves camera framing around one still image. It does not create new poses, lip-sync, body motion, or new AI frames.
-- A full non-linear timeline editor with trimming, audio synchronization, transitions, and final compositing remains a future milestone.
+- No AI video generation provider is connected. Text-to-video and music-video scene tools prepare prompts/briefs only; they do not submit jobs to an AI model.
+- No automatic beat detection or lyric alignment. Music-video shot timings are estimated from total song duration, not analyzed against the waveform or BPM.
+- No automatic assembly of generated clips, audio mix, transitions, captions, or final MP4 render.
+- No login, cloud project persistence, server-side asset upload, billing, job queue, or database. Projects and planning data are prototype/demo data.
+- The photo animator only moves camera framing around one still image; it does not create new poses, lip-sync, body motion, or new AI frames.
+- A full non-linear timeline editor with clip trimming, reorder, audio tracks, transitions, and final compositing remains a future milestone.
 
 ## Run locally
 
@@ -30,42 +31,42 @@ python -m http.server 8000
 
 Then open http://localhost:8000/platform/.
 
-For local WebM export, use a browser with Canvas captureStream() and MediaRecorder support. Browser recording support varies on phones; a recent desktop Chrome or Edge is a fallback if the export is unavailable.
+For local WebM export, use a browser with Canvas captureStream() and MediaRecorder support. Browser recording support varies on phones; a recent desktop Chrome or Edge is a fallback if export is unavailable.
 
-## Enable real text-to-video generation
+## Connect a real AI video provider
 
-The current Text to Video page prepares a prompt and exports its settings as JSON. It does **not** send a request to an AI model or generate a video.
-
-Recommended secure integration sequence:
+The current UI does not generate AI video. To enable genuine text-to-video and music-video scene generation:
 
 1. Build an authenticated backend endpoint such as POST /api/generations.
-2. Validate user authorization, prompt length, requested duration/aspect ratio, file permissions, rate limits, and budget limits.
-3. Store the selected provider's API key only in a private server environment variable (for example VIDEO_PROVIDER_API_KEY). Never put a secret in index.html, browser JavaScript, public environment variables, Git commits, or a mobile app bundle.
-4. Submit the prompt and generation settings from the backend to a selected provider API. Return a job ID and a pending status, not a fake completed result.
-5. Poll or receive a verified webhook for completion, save the result to private object storage, and provide a short-lived download URL.
-6. Show job status, errors, retries, expected cost/credits, and usage caps in the UI.
+2. Validate authorization, prompt length, aspect ratio, duration, file permissions, rate limits, and spending caps.
+3. Store the chosen provider API key only in a private server environment variable (for example VIDEO_PROVIDER_API_KEY). Never put a secret in index.html, browser JavaScript, public environment variables, Git commits, or a mobile app bundle.
+4. Send the prompt and supported settings to the selected provider API from the backend. Return a job ID and pending status, not a fake completed result.
+5. Poll or receive a verified webhook for completion, store the video in private object storage, and provide a short-lived download URL.
+6. Show real job status, errors, retries, provider credits/costs, and per-user usage limits.
 
 ### API keys and cost
 
-- Prompt building, JSON export, and local still-image motion do not need an API key.
-- True AI text-to-video usually requires a provider account and credentials. Free credits, free-tier availability, model access, and pricing can change; verify current provider API terms before promising a free option.
-- Hosting, backend execution, storage, and video rendering may cost money even if generation credits are free. Add a per-user budget cap and rate limiting before public launch.
-- Provider credentials belong on the server. Do not expose them in frontend source or commit them to GitHub.
+- Music-video planning, prompt copying, local audio preview, JSON/TXT export, and local still-image motion do not need an API key.
+- True AI video generation usually requires a provider account and API credentials. Free credits, free tiers, model access, regional availability, and pricing change; verify current provider API terms before promising a free option.
+- Backend hosting, storage, queue workers, and final rendering can cost money even if generation credits are free. Add rate limits and spending caps before public launch.
+- Keep songs, reference photos, and generated outputs private unless the user explicitly chooses to share them. Do not upload the user's track without clear consent.
 
 ## Recommended production architecture
 
 - Frontend: Next.js + TypeScript, responsive and accessible controls.
 - Backend: authenticated server routes and a provider adapter layer.
-- Database: projects, storyboards, characters, assets, generation jobs, and usage records.
-- Private object storage for reference images and rendered video.
+- Database: projects, tracks, lyrics/sections, storyboards, characters, assets, generation jobs, and usage records.
+- Private object storage for source audio, reference images, and rendered clips.
 - Queue-backed generation orchestration, retries, verified webhooks, and job status events.
-- FFmpeg-based final assembly for clip trimming, audio, captions, transitions, UD🏀KA / YSL ENT branding, and MP4 output.
+- Timeline editor with clip reorder/trim, audio tracks, lyrics/captions, transitions, title cards, and branding.
+- FFmpeg-based final assembly for audio sync, captions, transitions, UD🏀KA / YSL ENT branding, and MP4 output.
+- Optional beat/section analysis to align cuts to song structure; do not imply this is present until implemented and tested.
 - Usage accounting, observability, abuse prevention, retention controls, and per-user spending limits.
 
 ## Suggested next milestones
 
 1. Connect a real text-to-video provider behind a secure backend adapter.
-2. Add generation job status and private output storage.
-3. Persist projects and storyboards.
-4. Build the timeline editor with reorder, trim, and audio tracks.
-5. Render assembled MP4s through a queue-backed render service.
+2. Generate scene clips from the Music Video Studio shot prompts and show genuine job status.
+3. Add private asset storage and project persistence.
+4. Build a real timeline with reorder, trim, and audio tracks.
+5. Render and download a finished MP4 with the user's licensed audio and UD🏀KA / YSL ENT branding.

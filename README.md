@@ -1,14 +1,14 @@
 <p align="center">
-  <img src="plugins/vidmuse-packaging/assets/icon.png" alt="VidMuse" width="112" />
+  <img src="plugins/vidmuse-packaging/assets/icon.png" alt="UDOKS" width="112" />
 </p>
 
-<h1 align="center">VidMuse Agent Plugin</h1>
+<h1 align="center">UDOKS Agent Plugin</h1>
 
 <p align="center">
   Turn ideas, scripts, songs, websites, and speaking footage into designed videos with an AI agent.
 </p>
 
-VidMuse is a plugin for ChatGPT, Codex, Cursor, and Claude that gives an agent production workflows for creating, recutting, designing, assembling, reviewing, and rendering video projects. It combines VidMuse generation and Timeline tools with HyperFrames motion composition and a local library of 162 Shotcraft effects.
+UDOKS Packaging is a plugin for supported Codex, Cursor, and Claude environments that gives an agent production workflows for creating, recutting, designing, assembling, reviewing, and rendering video projects. It combines VidMuse generation and Timeline tools with HyperFrames motion composition and a local library of 162 Shotcraft effects.
 
 This repository is both human-readable documentation and an installable marketplace for Codex, Cursor, and Claude. If you are an agent, follow the [Agent installation contract](#agent-installation-contract) exactly.
 
@@ -38,57 +38,57 @@ The plugin does not bundle an executable or credentials. When a workflow first n
 ### Install from Codex CLI
 
 ```bash
-codex plugin marketplace add SandAI-org/vidmuse-plugin --ref main
-codex plugin add vidmuse-packaging@vidmuse-plugin
+codex plugin marketplace add Georgiejeff/vidmuse-plugin --ref main
+codex plugin add udoks-packaging@udoks-plugin
 codex plugin list --json
 ```
 
-The expected identities are:
+The expected identities for this fork are:
 
 | Field | Value |
 | --- | --- |
-| Repository | `SandAI-org/vidmuse-plugin` |
+| Repository | `Georgiejeff/vidmuse-plugin` |
 | Git ref | `main` |
-| Marketplace | `vidmuse-plugin` |
-| Plugin | `vidmuse-packaging` |
+| Marketplace | `udoks-plugin` |
+| Plugin | `udoks-packaging` |
 
 If the marketplace is already configured, refresh it before reinstalling or updating:
 
 ```bash
-codex plugin marketplace upgrade vidmuse-plugin
+codex plugin marketplace upgrade udoks-plugin
 ```
 
 After installation, start a **new task or CLI session**. Plugin skills are loaded into new sessions; the task that performed the installation should not claim that it can already use newly installed skills.
 
 ### Install from Codex app
 
-In ChatGPT desktop, open **Plugins**, select the **VidMuse Plugin** marketplace, open **VidMuse Packaging**, and install it. Then start a new task.
+In ChatGPT desktop, open **Plugins**, select the **UDOKS Plugin** marketplace, open **UDOKS Packaging**, and install it. Then start a new task.
 
 If the marketplace is not visible yet, add it with the CLI command above and reopen the app.
 
 ### Install in Cursor
 
 ```bash
-cursor plugin install SandAI-org/vidmuse-plugin
+cursor plugin install Georgiejeff/vidmuse-plugin
 ```
 
-Or, from Cursor's **Plugins** panel, paste this repository URL and select **VidMuse Packaging**. After installation, reload the window or open a new workspace — Cursor loads plugin skills at workspace start.
+Or, from Cursor's **Plugins** panel, paste this repository URL and select **UDOKS Packaging**. After installation, reload the window or open a new workspace — Cursor loads plugin skills at workspace start.
 
 ### Install in Claude Code
 
 ```bash
-claude plugin marketplace add SandAI-org/vidmuse-plugin --name vidmuse-plugin
-claude plugin add vidmuse-packaging@vidmuse-plugin
+claude plugin marketplace add Georgiejeff/vidmuse-plugin --name udoks-plugin
+claude plugin add udoks-packaging@udoks-plugin
 ```
 
-The root `.claude-plugin/marketplace.json` name (`vidmuse-plugin`) must match the `marketplace add --name` argument exactly. After installation, start a new Claude Code session; plugin skills are only loaded at session start.
+The root `.claude-plugin/marketplace.json` name (`udoks-plugin`) must match the `marketplace add --name` argument exactly. After installation, start a new Claude Code session; plugin skills are only loaded at session start.
 
 ## Install with an agent
 
 Paste this into a new Codex task:
 
 ```text
-/goal Read https://github.com/SandAI-org/vidmuse-plugin#agent-installation-contract and follow the Agent installation contract exactly. Install vidmuse-packaging from the vidmuse-plugin marketplace on main, verify the installed state, and report the exact result. Do not stop after cloning or reading the repository. If permissions or user action are required, ask for them. Finish by telling me to start a new task and give me one safe first-use prompt that verifies VidMuse is loaded without spending credits.
+/goal Read https://github.com/Georgiejeff/vidmuse-plugin#agent-installation-contract and follow the Agent installation contract exactly. Install vidmuse-packaging from the vidmuse-plugin marketplace on main, verify the installed state, and report the exact result. Do not stop after cloning or reading the repository. If permissions or user action are required, ask for them. Finish by telling me to start a new task and give me one safe first-use prompt that verifies VidMuse is loaded without spending credits.
 ```
 
 ### Agent installation contract
@@ -98,10 +98,10 @@ This section is normative for an agent asked to install the plugin.
 **Target**
 
 ```yaml
-repository: https://github.com/SandAI-org/vidmuse-plugin
+repository: https://github.com/Georgiejeff/vidmuse-plugin
 ref: main
-marketplace: vidmuse-plugin
-plugin: vidmuse-packaging
+marketplace: udoks-plugin
+plugin: udoks-packaging
 marketplace_manifest: .agents/plugins/marketplace.json
 plugin_manifest: plugins/vidmuse-packaging/.codex-plugin/plugin.json
 ```
@@ -110,32 +110,32 @@ plugin_manifest: plugins/vidmuse-packaging/.codex-plugin/plugin.json
 
 1. Confirm that the host supports plugins. Use ChatGPT desktop with Codex or Codex CLI. Do not claim installation from an unsupported surface.
 2. Inspect the configured marketplaces with `codex plugin marketplace list`.
-3. If `vidmuse-plugin` is absent, run:
+3. If `udoks-plugin` is absent, run:
 
    ```bash
-   codex plugin marketplace add SandAI-org/vidmuse-plugin --ref main
+   codex plugin marketplace add Georgiejeff/vidmuse-plugin --ref main
    ```
 
    If it is already present, refresh it with:
 
    ```bash
-   codex plugin marketplace upgrade vidmuse-plugin
+   codex plugin marketplace upgrade udoks-plugin
    ```
 
-4. Inspect availability with `codex plugin list --available --json`. Confirm that marketplace `vidmuse-plugin` exposes plugin `vidmuse-packaging`.
+4. Inspect availability with `codex plugin list --available --json`. Confirm that marketplace `udoks-plugin` exposes plugin `udoks-packaging`.
 5. If the plugin is not installed, run:
 
    ```bash
-   codex plugin add vidmuse-packaging@vidmuse-plugin
+   codex plugin add udoks-packaging@udoks-plugin
    ```
 
-6. Run `codex plugin list --json` and verify that `vidmuse-packaging@vidmuse-plugin` is installed and enabled. Base the report on command output, not assumption.
+6. Run `codex plugin list --json` and verify that `udoks-packaging@udoks-plugin` is installed and enabled. Base the report on command output, not assumption.
 7. Tell the user to start a new task or CLI session before first use. Provide the safe verification prompt below.
 
 **Completion criteria**
 
-- The `vidmuse-plugin` marketplace is configured from this repository's `main` ref.
-- `vidmuse-packaging@vidmuse-plugin` is reported as installed and enabled.
+- The `udoks-plugin` marketplace is configured from this repository's `main` ref.
+- `udoks-packaging@udoks-plugin` is reported as installed and enabled.
 - No repository clone is misreported as a plugin installation.
 - The user is told that first use must happen in a new task or session.
 - Any missing permissions, unavailable host capability, network failure, or authentication requirement is reported explicitly.
@@ -152,7 +152,7 @@ A successful response should route the request to `vidmuse-recut`. After that ch
 
 ## Use VidMuse
 
-Describe the deliverable in ordinary language. The `vidmuse` router selects one owning workflow and loads focused capabilities as needed. In Codex, you can type `$vidmuse` to invoke the router explicitly. In ChatGPT, type `@` and select VidMuse Packaging when you want to force plugin selection.
+Describe the deliverable in ordinary language. The `vidmuse` router selects one owning workflow and loads focused capabilities as needed. In Codex, you can type `$vidmuse` to invoke the router explicitly. In ChatGPT, type `@` and select UDOKS Packaging when you want to force plugin selection.
 
 Example prompts:
 
@@ -230,19 +230,19 @@ The router keeps a complete film under one owner. Design, motion, assets, media 
 Refresh the marketplace snapshot, then reinstall from the plugin browser or CLI if an updated version is available:
 
 ```bash
-codex plugin marketplace upgrade vidmuse-plugin
+codex plugin marketplace upgrade udoks-plugin
 ```
 
 To remove the plugin:
 
 ```bash
-codex plugin remove vidmuse-packaging@vidmuse-plugin
+codex plugin remove udoks-packaging@udoks-plugin
 ```
 
 To remove the marketplace source as well:
 
 ```bash
-codex plugin marketplace remove vidmuse-plugin
+codex plugin marketplace remove udoks-plugin
 ```
 
 ## License

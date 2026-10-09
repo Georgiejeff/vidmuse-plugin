@@ -24,6 +24,7 @@
     <nav class="nav" aria-label="Main navigation">
       <button class="active" data-page="dashboard"><span class="ico">◈</span>Dashboard</button>
       <button data-page="create"><span class="ico">✦</span>Create</button>
+      <button data-page="music-video"><span class="ico">♫</span>Music Video Studio</button>
       <button data-page="text-video"><span class="ico">▶</span>Text to Video</button>
       <button data-page="image-motion"><span class="ico">▶</span>Animate Photo</button>
       <button data-page="storyboard"><span class="ico">▤</span>Storyboard</button>
@@ -132,6 +133,31 @@
     </div>
   </section>
 
+
+  <section id="page-music-video" class="section">
+    <div class="heading"><div><div class="eyebrow">UD🏀KA / YSL ENT PRODUCTION</div><h1>Music Video Studio</h1><p>Plan a complete music video from your track: build a timed shot list, create prompts for each scene, and export a production brief for editing or AI generation.</p></div><span class="motion-badge">PRODUCTION PLANNER · LOCAL</span></div>
+    <div class="motion-layout">
+      <div class="panel">
+        <div class="panelhead"><div><h2>Track & video brief</h2><p>Start with your song and define the visual direction.</p></div></div>
+        <div class="formrow"><div class="field"><label for="mvArtist">ARTIST</label><input id="mvArtist" value="UD🏀KA"></div><div class="field"><label for="mvLabel">LABEL / BRAND</label><input id="mvLabel" value="YSL ENT"></div></div>
+        <div class="field"><label for="mvTitle">TRACK TITLE</label><input id="mvTitle" placeholder="Enter your song title"></div>
+        <div class="field"><label for="mvAudio">YOUR SONG FILE (OPTIONAL)</label><input id="mvAudio" type="file" accept="audio/*"><div class="fieldhint">Audio is read locally in this browser for duration and preview; it is not uploaded.</div><audio id="mvAudioPlayer" controls hidden style="width:100%;margin-top:8px"></audio></div>
+        <div class="formrow"><div class="field"><label for="mvDuration">SONG DURATION (SECONDS)</label><input id="mvDuration" type="number" min="15" max="900" value="120"></div><div class="field"><label for="mvBpm">BPM (OPTIONAL)</label><input id="mvBpm" type="number" min="40" max="240" placeholder="e.g. 100"></div></div>
+        <div class="formrow"><div class="field"><label for="mvRatio">DELIVERY FORMAT</label><select id="mvRatio"><option value="9:16">9:16 · TikTok / Reels</option><option value="16:9">16:9 · YouTube</option><option value="1:1">1:1 · Square promo</option></select></div><div class="field"><label for="mvStyle">VISUAL DIRECTION</label><select id="mvStyle"><option>Cinematic ultra-realistic</option><option>Luxury street video</option><option>Dark futuristic</option><option>Afrobeats performance</option><option>Anime / action</option><option>Dreamlike storytelling</option></select></div></div>
+        <div class="field"><label for="mvConcept">VIDEO CONCEPT</label><textarea id="mvConcept" rows="3" placeholder="Describe the story, performance, location, mood, outfits, and visual motifs."></textarea></div>
+        <div class="field"><label for="mvIdentity">IDENTITY & CONTINUITY NOTES</label><textarea id="mvIdentity" rows="2" placeholder="Use supplied artist photos as identity references. Keep face, hairstyle, jewelry, tattoos, and outfit consistent."></textarea></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="primary" id="mvBuild">✦ Build music video plan</button><button class="secondary" id="mvExport">↓ Export production JSON</button></div>
+        <div class="motion-status" id="mvStatus" role="status" aria-live="polite">Planning tools work locally. AI generation and final rendering are not connected.</div>
+      </div>
+      <div class="panel">
+        <div class="panelhead"><div><h2>Shot list & timeline</h2><p>Editable scene prompts for a full-track video.</p></div><button class="secondary" id="mvAddScene">＋ Add shot</button></div>
+        <div id="mvTimeline" class="scene-list"><div class="empty">Build a plan to generate a starter shot list.</div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="secondary" id="mvCopyPlan">Copy shot list</button><button class="secondary" id="mvDownloadPrompts">↓ Export prompts TXT</button></div>
+        <div style="border-top:1px solid var(--line);margin-top:16px;padding-top:14px"><div class="eyebrow">PRODUCTION STATUS</div><h3 style="margin:7px 0">Planner ready · renderer not connected</h3><p style="font-size:12px;color:var(--muted)">This tool structures the production and generates prompts. It does not currently generate AI clips, sync cuts automatically to beats, mix audio, or render a finished MP4.</p></div>
+      </div>
+    </div>
+  </section>
+
   <section id="page-storyboard" class="section">
     <div class="heading"><div><div class="eyebrow">SCENE DESIGN</div><h1>Storyboard & timeline</h1><p>Structure your animation into clear visual beats before production.</p></div><button class="primary" id="addScene">＋ Add scene</button></div>
     <div class="panel"><div class="panelhead"><div><h2 id="storyTitle">Power Awakening — 15-second sequence</h2><p id="storyMeta">Vertical 9:16 · Cinematic · UD🏀KA / YSL ENT</p></div><span class="pill" id="sceneCount">3 scenes</span></div><div class="timeline" id="timeline">
@@ -174,7 +200,7 @@ let currentStyle='Cinematic',briefText='',projectCount=4,sceneNumber=3,projectRe
 {title:'Armor Evolution',desc:'Six looks · one identity',tag:'CHARACTER',ratio:'9:16',duration:'6 scenes',cls:'t3'},
 {title:'YSL ENT Intro',desc:'Logo reveal · light & smoke',tag:'BRAND FILM',ratio:'16:9',duration:'8 sec',cls:'t4'}];
 function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(window._toast);window._toast=setTimeout(()=>t.classList.remove('show'),3000)}
-function goto(page){$('.section').forEach(s=>s.classList.toggle('active',s.id==='page-'+page));$$('.nav button[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('#crumbtitle').textContent=({dashboard:'Dashboard',create:'Create animation','text-video':'Text to video',storyboard:'Storyboard & timeline',motion:'Motion Studio',projects:'My Projects',library:'Assets & Characters',export:'Export Center','image-motion':'Animate Photo'})[page]||page;if(page==='projects')renderProjects();window.scrollTo({top:0,behavior:'smooth'})}
+function goto(page){$('.section').forEach(s=>s.classList.toggle('active',s.id==='page-'+page));$$('.nav button[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('#crumbtitle').textContent=({dashboard:'Dashboard',create:'Create animation','music-video':'Music Video Studio','text-video':'Text to video',storyboard:'Storyboard & timeline',motion:'Motion Studio',projects:'My Projects',library:'Assets & Characters',export:'Export Center','image-motion':'Animate Photo'})[page]||page;if(page==='projects')renderProjects();window.scrollTo({top:0,behavior:'smooth'})}
 $$('[data-page]').forEach(b=>b.addEventListener('click',()=>goto(b.dataset.page)));$$('[data-goto]').forEach(b=>b.addEventListener('click',()=>goto(b.dataset.goto)));
 $$('[data-style]').forEach(b=>b.addEventListener('click',()=>{$$('[data-style]').forEach(x=>x.classList.toggle('selected',x===b));currentStyle=b.dataset.style}));
 $$('[data-prompt]').forEach(b=>b.addEventListener('click',()=>{goto('create');$('#prompt').value=b.dataset.prompt;toast('Preset added to your animation prompt.')}));
@@ -221,5 +247,34 @@ renderProjects();
  $id('tvCopy').addEventListener('click',async()=>{const b=show();const text=[b.prompt,'Visual style: '+b.visual_style,'Camera: '+b.camera_movement,'Duration: '+b.duration_seconds+' seconds','Aspect ratio: '+b.aspect_ratio,b.branding?'Branding: '+b.branding:'','Avoid: '+b.negative_prompt].filter(Boolean).join('\n');try{await navigator.clipboard.writeText(text);status.textContent='Prompt copied. Paste it into your chosen text-to-video service.'}catch(e){status.textContent='Prompt assembled in the preview. Select and copy it manually.'}});
  $id('tvDownload').addEventListener('click',()=>{const b=show(),blob=new Blob([JSON.stringify(b,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='udoks-text-to-video-brief.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);status.textContent='Generation brief exported as JSON. No video was generated.'});
 })();
-\n</script>
+\n
+/* Music video pre-production planner: local-only track metadata, shot list, prompt and JSON exports */
+(()=> {
+ const $=id=>document.getElementById(id),timeline=$('mvTimeline'),status=$('mvStatus');
+ if(!timeline||!status)return;
+ let scenes=[];
+ const templates=[
+  {name:'Opening identity reveal',start:0,portion:.08,action:'Open on a striking artist silhouette or signature location. Reveal the artist and mood with a deliberate cinematic push-in.',camera:'Slow push-in',purpose:'Establish artist identity and visual world'},
+  {name:'Verse performance',start:.08,portion:.22,action:'Artist performs directly to camera in the main location, with controlled gestures and confident presence.',camera:'Slow tracking shot',purpose:'Anchor the verse with performance coverage'},
+  {name:'World-building cutaways',start:.30,portion:.12,action:'Cut to atmospheric details: jewelry, shoes, hands, city lights, rain, car reflections, and location textures.',camera:'Macro inserts and lateral pans',purpose:'Add rhythm and visual texture'},
+  {name:'Hook hero scene',start:.42,portion:.18,action:'Return to the strongest hero setup. Add a bold lighting change, confident performance, and memorable composition.',camera:'Low-angle dolly-in',purpose:'Make the chorus visually memorable'},
+  {name:'Story or transformation beat',start:.60,portion:.14,action:'Introduce a visual twist or transformation that supports the lyrics without changing the artist identity.',camera:'Orbit or crane reveal',purpose:'Create a narrative peak'},
+  {name:'Final hook montage',start:.74,portion:.18,action:'Intercut the best performance takes, dramatic close-ups, and signature visual motifs on musical accents.',camera:'Rhythmic tracking and close-ups',purpose:'Build toward the ending'},
+  {name:'End card and final image',start:.92,portion:.08,action:'Finish on a deliberate hero frame, artist name, track title, and UD🏀KA / YSL ENT branding.',camera:'Slow pull-back or locked frame',purpose:'Deliver a clean branded ending'}
+ ];
+ const fmt=n=>{n=Math.max(0,Math.floor(n));return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0')};
+ function read(){return {artist:$('mvArtist').value.trim()||'UD🏀KA',label:$('mvLabel').value.trim()||'YSL ENT',title:$('mvTitle').value.trim()||'Untitled Track',duration:Math.max(15,Math.min(900,Number($('mvDuration').value)||120)),bpm:Number($('mvBpm').value)||null,aspect_ratio:$('mvRatio').value,visual_style:$('mvStyle').value,concept:$('mvConcept').value.trim(),identity_notes:$('mvIdentity').value.trim()}}
+ function makePrompt(s,b){return 'Create a '+b.visual_style.toLowerCase()+' music-video shot for '+b.artist+' performing “'+b.title+'”. '+(b.concept?'Overall concept: '+b.concept+' ':'')+'Scene: '+s.action+' Camera: '+s.camera+'. '+(b.identity_notes?'Identity continuity: '+b.identity_notes+' ':'')+'Keep wardrobe and location continuity, realistic motion, intentional composition, clean lighting, and no unintended text. Frame '+b.aspect_ratio+'. Branding belongs in post-production: '+b.label+'.'}
+ function render(){timeline.replaceChildren();scenes.forEach((s,i)=>{const card=document.createElement('div');card.className='scene-card';card.style.cssText='padding:12px;border:1px solid var(--line);border-radius:12px;margin-bottom:10px';const head=document.createElement('div');head.style.cssText='display:flex;justify-content:space-between;gap:8px;align-items:center';const title=document.createElement('strong');title.textContent=String(i+1).padStart(2,'0')+' · '+s.name;title.style.fontSize='12px';const time=document.createElement('span');time.className='motion-badge';time.textContent=fmt(s.start)+'–'+fmt(s.end);head.append(title,time);card.append(head);const action=document.createElement('textarea');action.rows=3;action.value=s.action;action.setAttribute('aria-label','Shot action');action.style.cssText='width:100%;margin-top:8px';action.addEventListener('change',()=>s.action=action.value);card.append(action);const cam=document.createElement('input');cam.value=s.camera;cam.setAttribute('aria-label','Camera movement');cam.style.cssText='width:100%;margin-top:6px';cam.addEventListener('change',()=>s.camera=cam.value);card.append(cam);const foot=document.createElement('div');foot.style.cssText='display:flex;gap:7px;flex-wrap:wrap;margin-top:8px';const promptBtn=document.createElement('button');promptBtn.className='secondary';promptBtn.textContent='Copy AI prompt';promptBtn.addEventListener('click',async()=>{const text=makePrompt(s,read());try{await navigator.clipboard.writeText(text);status.textContent='Prompt copied for '+s.name+'. Paste it into your chosen AI video service.'}catch(e){status.textContent='Prompt generated; copy it from the scene details manually.'}});const remove=document.createElement('button');remove.className='secondary';remove.textContent='Remove';remove.addEventListener('click',()=>{scenes=scenes.filter(x=>x!==s);render()});foot.append(promptBtn,remove);card.append(foot);timeline.append(card)})}
+ function build(){const b=read(),d=b.duration;scenes=templates.map(t=>({name:t.name,start:Math.round(t.start*d),end:Math.min(d,Math.round((t.start+t.portion)*d)),action:t.action,camera:t.camera,purpose:t.purpose}));scenes[scenes.length-1].end=d;render();status.textContent='Starter shot list built for '+b.title+'. Review the timings and adjust shots to your song structure; timings are estimated, not beat-detected.'}
+ function payload(){const b=read();return {...b,scenes:scenes.map(s=>({...s,prompt:makePrompt(s,b)})),generation_status:'planning_only_provider_not_connected',notes:'Scene timings are estimated from total duration. No beat analysis, AI generation, or final video render is performed.'}}
+ $('mvBuild').addEventListener('click',build);
+ $('mvAddScene').addEventListener('click',()=>{const d=read().duration,last=scenes[scenes.length-1],start=last?last.end:0;scenes.push({name:'Custom shot '+(scenes.length+1),start:Math.min(start,d),end:d,action:'Describe one clear on-screen action that supports the song.',camera:'Slow cinematic push-in',purpose:'Custom scene'});render();status.textContent='Custom shot added. Edit its action and camera move.'});
+ $('mvExport').addEventListener('click',()=>{if(!scenes.length)build();const blob=new Blob([JSON.stringify(payload(),null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='udoks-music-video-production.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);status.textContent='Production brief exported. This file contains the plan and prompts, not a rendered video.'});
+ $('mvDownloadPrompts').addEventListener('click',()=>{if(!scenes.length)build();const b=read(),text=payload().scenes.map((s,i)=>'SHOT '+String(i+1).padStart(2,'0')+' | '+fmt(s.start)+'–'+fmt(s.end)+' | '+s.name+'\n'+s.prompt).join('\n\n');const url=URL.createObjectURL(new Blob([text],{type:'text/plain'})),a=document.createElement('a');a.href=url;a.download='udoks-music-video-prompts.txt';a.click();URL.revokeObjectURL(url);status.textContent='Shot prompts exported as TXT.'});
+ $('mvCopyPlan').addEventListener('click',async()=>{if(!scenes.length)build();const text=payload().scenes.map((s,i)=>String(i+1)+'. '+s.name+' ('+fmt(s.start)+'–'+fmt(s.end)+')\n'+s.prompt).join('\n\n');try{await navigator.clipboard.writeText(text);status.textContent='Shot list copied to clipboard.'}catch(e){status.textContent='Shot list is ready; use Export prompts TXT if clipboard access is unavailable.'}});
+ let audioUrl=null;$('mvAudio').addEventListener('change',()=>{const file=$('mvAudio').files&&$('mvAudio').files[0];if(!file)return;if(audioUrl)URL.revokeObjectURL(audioUrl);audioUrl=URL.createObjectURL(file);const player=$('mvAudioPlayer');player.src=audioUrl;player.hidden=false;player.onloadedmetadata=()=>{if(Number.isFinite(player.duration)&&player.duration>0){$('mvDuration').value=Math.round(player.duration);status.textContent='Audio loaded locally. Duration filled from file metadata; beat analysis is not included.'}};status.textContent='Audio is available for local preview only; it has not been uploaded.'});
+})();
+
+</script>
 </body></html>

@@ -9,13 +9,13 @@ UDOKS is being shaped around the visual world of **UD🏀KA / YSL ENT**. This re
 Open `platform/index.html` in a browser to explore the responsive workspace prototype. It includes:
 
 - Dashboard with project cards and creative activity
-- Animation brief builder with prompt, style, camera move, duration, aspect ratio, brand text, and local image preview
+- Animation brief builder with prompt, style, camera move, duration, aspect ratio, brand text, and local image preview\n- **Animate Photo:** animate a supplied still image with camera moves and export a short browser-rendered WebM where supported\n- AI video prompt helper for pasting into a separately chosen image-to-video provider
 - Storyboard scene list with add-scene interaction
 - Motion Studio preset prompts for camera, effects, character movement, lighting, titles, and music
 - Asset and character continuity workspace
 - Export checklist for TikTok/Reels, square, portrait, and widescreen deliverables
 
-The current frontend is a **working UI prototype**. It builds briefs and checklists in the browser; it does not yet call an AI generation provider, upload files, authenticate accounts, store cloud projects, or render downloadable MP4s. Those capabilities require a backend, provider integrations, secure credentials, and a render pipeline.
+The current frontend is a **working browser prototype**. The Animate Photo tool can render camera movement over a still image and export WebM locally on supported browsers. This is not true AI image-to-video: it does not create new frames or character actions. The platform does not yet call an AI generation provider, upload assets to a server, authenticate accounts, persist cloud projects, or render MP4s. Those capabilities require a backend, provider integrations, secure credentials, and a render pipeline. See [platform development notes](platform/README.md) for the implementation boundary and next steps.
 
 ## Product direction
 

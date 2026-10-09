@@ -10,7 +10,7 @@ Open `platform/index.html` in a browser to explore the responsive workspace prot
 
 - Dashboard with project cards and creative activity
 - Animation brief builder with prompt, style, camera move, duration, aspect ratio, brand text, and local image preview
-- **Text to Video:** compose a prompt, set style/camera/duration/aspect ratio, copy it, and export a JSON generation brief
+- **Music Video Studio:** build an editable, timed shot list for a UD🏀KA / YSL ENT track, preview local audio, copy per-shot prompts, and export a production brief\n- **Text to Video:** compose a prompt, set style/camera/duration/aspect ratio, copy it, and export a JSON generation brief
 - **Animate Photo:** preview camera movement over a still image and export WebM in supported browsers
 - **Animate Photo:** animate a supplied still image with camera moves and export a short browser-rendered WebM where supported
 - AI video prompt helper for pasting into a separately chosen image-to-video provider
@@ -19,7 +19,7 @@ Open `platform/index.html` in a browser to explore the responsive workspace prot
 - Asset and character continuity workspace
 - Export checklist for TikTok/Reels, square, portrait, and widescreen deliverables
 
-The current frontend is a **working browser prototype**. Text to Video builds and exports a generation brief but does not yet submit a request to an AI model. Animate Photo renders camera movement over a still image and can export WebM in supported browsers; it does not create new AI frames or character actions. The platform does not yet connect to an AI generation provider, upload assets to a server, authenticate accounts, persist cloud projects, or render final MP4s. Those capabilities require a backend, provider integrations, secure credentials, and a render pipeline. See [platform development notes](platform/README.md) for the implementation boundary and next steps.
+The current frontend is a **working browser prototype**. Music Video Studio creates an editable starter shot list and scene prompts, reads selected song metadata locally, and exports production briefs; it does not automatically detect beats or assemble a finished music video. Text to Video builds and exports a generation brief but does not yet submit a request to an AI model. Animate Photo renders camera movement over a still image and can export WebM in supported browsers; it does not create new AI frames or character actions. The platform does not yet connect to an AI generation provider, upload assets to a server, authenticate accounts, persist cloud projects, or render final MP4s. Those capabilities require a backend, provider integrations, secure credentials, and a render pipeline. See [platform development notes](platform/README.md) for the implementation boundary and next steps.
 
 ## Product direction
 

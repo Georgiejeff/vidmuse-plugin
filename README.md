@@ -104,7 +104,7 @@ claude plugin add udoks-packaging@udoks-plugin
 
 ### Cursor
 
-Use the Cursor Plugins panel and add this repository URL, then select **UDOKS Packaging** if it appears in the marketplace listing. Host support and marketplace behavior depend on your installed Cursor version.
+Use the Cursor Plugins panel and add this repository URL, then select **UDOKS Animation Platform** if it appears in the marketplace listing. Host support and marketplace behavior depend on your installed Cursor version.
 
 After installing, start a new task/session so the host loads the plugin's skills.
 

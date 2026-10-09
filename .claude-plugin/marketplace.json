@@ -7,7 +7,7 @@
     {
       "name": "udoks-packaging",
       "source": "./plugins/vidmuse-packaging",
-      "description": "Create, package, and recut VidMuse projects — script- and Style-directed H3 AI music videos, generation-first reusable IP-led films, focused product skills, 162 locally installable Shotcraft effects, on-demand official VidMuse CLI setup, and official HyperFrames domain skills."
+      "description": "UDOKS Animation Platform workflows for storyboarding, cinematic video creation, AI music videos, character animation, motion design, shot composition, and project review."
     }
   ]
 }

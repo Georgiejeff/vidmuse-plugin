@@ -11,15 +11,15 @@ Open `platform/index.html` in a browser to explore the responsive workspace prot
 - Dashboard with project cards and creative activity
 - Animation brief builder with prompt, style, camera move, duration, aspect ratio, brand text, and local image preview
 - **Music Video Studio:** build an editable, timed shot list for a UD🏀KA / YSL ENT track, preview local audio, copy per-shot prompts, and export a production brief\n- **Text to Video:** compose a prompt, set style/camera/duration/aspect ratio, copy it, and export a JSON generation brief
+- **Video Editor / Cut Studio:** import clips and a song locally, reorder and trim shots, preview the cut, add UD🏀KA / YSL ENT title overlays, and export WebM in supported browsers
 - **Animate Photo:** preview camera movement over a still image and export WebM in supported browsers
-- **Animate Photo:** animate a supplied still image with camera moves and export a short browser-rendered WebM where supported
 - AI video prompt helper for pasting into a separately chosen image-to-video provider
 - Storyboard scene list with add-scene interaction
 - Motion Studio preset prompts for camera, effects, character movement, lighting, titles, and music
 - Asset and character continuity workspace
 - Export checklist for TikTok/Reels, square, portrait, and widescreen deliverables
 
-The current frontend is a **working browser prototype**. Music Video Studio creates an editable starter shot list and scene prompts, reads selected song metadata locally, and exports production briefs; it does not automatically detect beats or assemble a finished music video. Text to Video builds and exports a generation brief but does not yet submit a request to an AI model. Animate Photo renders camera movement over a still image and can export WebM in supported browsers; it does not create new AI frames or character actions. The platform does not yet connect to an AI generation provider, upload assets to a server, authenticate accounts, persist cloud projects, or render final MP4s. Those capabilities require a backend, provider integrations, secure credentials, and a render pipeline. See [platform development notes](platform/README.md) for the implementation boundary and next steps.
+The current frontend is a **working browser prototype**. Music Video Studio creates an editable starter shot list and scene prompts, reads selected song metadata locally, and exports production briefs; Cut Studio can assemble imported footage and a song with basic trims and overlays, then export WebM where browser support permits. It does not automatically detect beats or generate AI clips. Text to Video builds and exports a generation brief but does not yet submit a request to an AI model. Animate Photo renders camera movement over a still image and can export WebM in supported browsers; it does not create new AI frames or character actions. The platform does not yet connect to an AI generation provider, upload assets to a server, authenticate accounts, persist cloud projects, or render final MP4s. Those capabilities require a backend, provider integrations, secure credentials, and a render pipeline. See [platform development notes](platform/README.md) for the implementation boundary and next steps.
 
 ## Product direction
 
@@ -50,6 +50,7 @@ Plan delivery for:
 .
 ├── platform/
 │   ├── index.html       # Responsive interactive frontend prototype
+│   ├── editor.html       # Local music-video assembly and WebM export
 │   └── README.md       # Platform development notes and next steps
 ├── .agents/plugins/    # Codex marketplace manifest
 ├── .claude-plugin/     # Claude marketplace manifest
@@ -67,7 +68,7 @@ The existing `vidmuse-packaging` directory is intentionally retained for now bec
 
 No build step is required for the current static prototype:
 
-1. Open `platform/index.html` in a modern browser.
+1. Open `platform/index.html` in a modern browser, then choose **Video Editor**; or open `platform/editor.html` directly.
 2. Select **Create** to draft an animation brief.
 3. Add a prompt and choose a visual direction, aspect ratio, duration, and camera move.
 4. Optionally add a reference image; it is previewed locally in the browser.

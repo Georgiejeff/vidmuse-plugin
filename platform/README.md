@@ -11,15 +11,16 @@ Mobile-friendly creative workspace for UD🏀KA / YSL ENT music-video pre-produc
 - **Animate Photo:** client-side Ken Burns-style camera motion (push-in, pull-back, pan, float, pulse) applied to a selected still image.
 - **Local WebM export:** uses Canvas capture and browser MediaRecorder where supported. The clip animates a still image; it does not generate new AI frames. Browser/device support varies; MP4 conversion is not built in.
 - Motion prompt presets, character-continuity prompt helpers, and export checklists.
+- **UDOKS Cut Studio (`editor.html`):** import local video clips and a song, reorder shots, set per-clip start/end trims, preview the assembled sequence, add artist/title/label overlays, and record a composed WebM via Canvas + MediaRecorder where supported. The editor runs client-side; selected assets are not uploaded.
 
 ## What is not implemented yet
 
 - No AI video generation provider is connected. Text-to-video and music-video scene tools prepare prompts/briefs only; they do not submit jobs to an AI model.
 - No automatic beat detection or lyric alignment. Music-video shot timings are estimated from total song duration, not analyzed against the waveform or BPM.
-- No automatic assembly of generated clips, audio mix, transitions, captions, or final MP4 render.
+- **Cut Studio** assembles imported clips in order with hard cuts, a single song track, and simple title/credit overlays, and can export WebM where supported. It does not yet offer beat/lyric sync, transitions, multi-track audio, captions, MP4 export, or cloud project persistence.
 - No login, cloud project persistence, server-side asset upload, billing, job queue, or database. Projects and planning data are prototype/demo data.
 - The photo animator only moves camera framing around one still image; it does not create new poses, lip-sync, body motion, or new AI frames.
-- A full non-linear timeline editor with clip trimming, reorder, audio tracks, transitions, and final compositing remains a future milestone.
+- A professional non-linear editor with waveform display, draggable timeline, transitions, effects, multi-track audio, and server-side MP4 rendering remains a future milestone.
 
 ## Run locally
 
@@ -31,7 +32,7 @@ python -m http.server 8000
 
 Then open http://localhost:8000/platform/.
 
-For local WebM export, use a browser with Canvas captureStream() and MediaRecorder support. Browser recording support varies on phones; a recent desktop Chrome or Edge is a fallback if export is unavailable.
+For editor WebM export, use a browser with Canvas captureStream(), MediaRecorder, and Web Audio support. The export is real-time and can be resource-intensive on phones; if a long/high-resolution export fails, try 540p, a shorter sequence, or a recent desktop Chrome/Edge.
 
 ## Connect a real AI video provider
 

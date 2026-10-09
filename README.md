@@ -1,41 +1,87 @@
-<p align="center">
-  <img src="plugins/vidmuse-packaging/assets/icon.png" alt="UDOKS" width="112" />
-</p>
+# UDOKS Animation Platform
 
-<h1 align="center">UDOKS Agent Plugin</h1>
+**A creator workspace for cinematic animation, AI music videos, character motion, motion graphics, storyboards, and social-first video production.**
 
-<p align="center">
-  Turn ideas, scripts, songs, websites, and speaking footage into designed videos with an AI agent.
-</p>
+UDOKS is being shaped around the visual world of **UD🏀KA / YSL ENT**. This repository combines an interactive frontend prototype with the existing agent workflows for planning, assembling, reviewing, and rendering video projects.
 
-UDOKS Packaging is a plugin for supported Codex, Cursor, and Claude environments that gives an agent production workflows for creating, recutting, designing, assembling, reviewing, and rendering video projects. It combines VidMuse generation and Timeline tools with HyperFrames motion composition and a local library of 162 Shotcraft effects.
+## Platform preview
 
-This repository is both human-readable documentation and an installable marketplace for Codex, Cursor, and Claude. If you are an agent, follow the [Agent installation contract](#agent-installation-contract) exactly.
+Open `platform/index.html` in a browser to explore the responsive workspace prototype. It includes:
 
-## What you can make
+- Dashboard with project cards and creative activity
+- Animation brief builder with prompt, style, camera move, duration, aspect ratio, brand text, and local image preview
+- Storyboard scene list with add-scene interaction
+- Motion Studio preset prompts for camera, effects, character movement, lighting, titles, and music
+- Asset and character continuity workspace
+- Export checklist for TikTok/Reels, square, portrait, and widescreen deliverables
 
-- Product launches, website films, explainers, and script-led videos
-- Recut talking-head, interview, podcast, course, and founder videos
-- Generative AI music videos from an uploaded song or a newly generated track
-- Reusable IP characters, mascots, avatars, and character-led series
-- Vox-style editorial paper-collage films
-- Transcripts, narration, music analysis, subtitles, and other media artifacts
-- Editable VidMuse Timeline projects and final renders
+The current frontend is a **working UI prototype**. It builds briefs and checklists in the browser; it does not yet call an AI generation provider, upload files, authenticate accounts, store cloud projects, or render downloadable MP4s. Those capabilities require a backend, provider integrations, secure credentials, and a render pipeline.
 
-The plugin also provides visual direction, semantic motion choreography, asset planning, HyperFrames composition, and a bilingual catalog of 162 installable `shot-*` treatments.
+## Product direction
 
-## Install
+### Create
+Turn a natural-language idea, script, song, or reference image into a structured production brief. Keep identity and wardrobe continuity explicit when animating supplied characters.
 
-### Requirements
+### Storyboard
+Break each deliverable into timed shots with a clear opening, action or transformation beat, and closing frame. Plan camera movement, lighting, transitions, sound cues, and titles.
 
-- ChatGPT desktop with Codex, or Codex CLI with plugin support; **or** Cursor ≥ 1.3 with plugin support; **or** Claude Code ≥ 1.5 with plugin support
-- Git and internet access for the marketplace snapshot
-- A [VidMuse](https://vidmuse.ai) account for production services
-- Node.js 22+, FFmpeg, and ffprobe when a workflow needs local preview or rendering
+### Motion Studio
+Organize reusable treatments for:
+- Cinematic push-ins, orbits, tracking shots, crane reveals, and whip pans
+- Lightning, particles, smoke, rain, atmosphere, and energy effects
+- Character transformations and identity-preserving movement
+- Kinetic typography, title cards, logo reveals, and end frames
+- Music-led timing, transitions, and beat accents
 
-The plugin does not bundle an executable or credentials. When a workflow first needs the VidMuse CLI, its `vidmuse-cli` skill resolves an existing installation or uses the official installer for the latest supported release. Login uses the VidMuse production service and may require a browser/device approval step.
+### Export
+Plan delivery for:
+- **9:16** TikTok, Instagram Reels, and YouTube Shorts
+- **1:1** square social media
+- **4:5** portrait feeds
+- **16:9** YouTube and widescreen film
 
-### Install from Codex CLI
+## Repository layout
+
+```text
+.
+├── platform/
+│   ├── index.html       # Responsive interactive frontend prototype
+│   └── README.md       # Platform development notes and next steps
+├── .agents/plugins/    # Codex marketplace manifest
+├── .claude-plugin/     # Claude marketplace manifest
+└── plugins/
+    └── vidmuse-packaging/
+        ├── .codex-plugin/
+        ├── .cursor-plugin/
+        ├── .claude-plugin/
+        └── skills/     # Existing video-production agent workflows
+```
+
+The existing `vidmuse-packaging` directory is intentionally retained for now because host manifests and skill references depend on that path. The installed marketplace/plugin identities have been updated to `udoks-plugin` and `udoks-packaging`; changing directory paths safely is a separate migration.
+
+## Run the prototype
+
+No build step is required for the current static prototype:
+
+1. Open `platform/index.html` in a modern browser.
+2. Select **Create** to draft an animation brief.
+3. Add a prompt and choose a visual direction, aspect ratio, duration, and camera move.
+4. Optionally add a reference image; it is previewed locally in the browser.
+5. Build the brief, open the storyboard, and add scene cards.
+
+For local development, a static server can be used, for example:
+
+```bash
+python -m http.server 8000
+```
+
+Then open `http://localhost:8000/platform/`.
+
+## Agent plugin installation
+
+The agent plugin is a separate component from the web prototype. It supplies production skills; it is not a generation service by itself and does not include credentials.
+
+### Codex CLI
 
 ```bash
 codex plugin marketplace add Georgiejeff/vidmuse-plugin --ref main
@@ -43,208 +89,43 @@ codex plugin add udoks-packaging@udoks-plugin
 codex plugin list --json
 ```
 
-The expected identities for this fork are:
-
-| Field | Value |
-| --- | --- |
-| Repository | `Georgiejeff/vidmuse-plugin` |
-| Git ref | `main` |
-| Marketplace | `udoks-plugin` |
-| Plugin | `udoks-packaging` |
-
-If the marketplace is already configured, refresh it before reinstalling or updating:
+If the marketplace is already configured, refresh it:
 
 ```bash
 codex plugin marketplace upgrade udoks-plugin
 ```
 
-After installation, start a **new task or CLI session**. Plugin skills are loaded into new sessions; the task that performed the installation should not claim that it can already use newly installed skills.
-
-### Install from Codex app
-
-In ChatGPT desktop, open **Plugins**, select the **UDOKS Plugin** marketplace, open **UDOKS Packaging**, and install it. Then start a new task.
-
-If the marketplace is not visible yet, add it with the CLI command above and reopen the app.
-
-### Install in Cursor
-
-```bash
-cursor plugin install Georgiejeff/vidmuse-plugin
-```
-
-Or, from Cursor's **Plugins** panel, paste this repository URL and select **UDOKS Packaging**. After installation, reload the window or open a new workspace — Cursor loads plugin skills at workspace start.
-
-### Install in Claude Code
+### Claude Code
 
 ```bash
 claude plugin marketplace add Georgiejeff/vidmuse-plugin --name udoks-plugin
 claude plugin add udoks-packaging@udoks-plugin
 ```
 
-The root `.claude-plugin/marketplace.json` name (`udoks-plugin`) must match the `marketplace add --name` argument exactly. After installation, start a new Claude Code session; plugin skills are only loaded at session start.
+### Cursor
 
-## Install with an agent
+Use the Cursor Plugins panel and add this repository URL, then select **UDOKS Packaging** if it appears in the marketplace listing. Host support and marketplace behavior depend on your installed Cursor version.
 
-Paste this into a new Codex task:
+After installing, start a new task/session so the host loads the plugin's skills.
 
-```text
-/goal Read https://github.com/Georgiejeff/vidmuse-plugin#agent-installation-contract and follow the Agent installation contract exactly. Install vidmuse-packaging from the vidmuse-plugin marketplace on main, verify the installed state, and report the exact result. Do not stop after cloning or reading the repository. If permissions or user action are required, ask for them. Finish by telling me to start a new task and give me one safe first-use prompt that verifies VidMuse is loaded without spending credits.
-```
+## Recommended next engineering stages
 
-### Agent installation contract
+1. **App foundation:** migrate the static prototype to a typed React/Next.js app with responsive components and project state.
+2. **Authentication and persistence:** user accounts, private projects, asset metadata, and database-backed storyboards.
+3. **Generation adapters:** integrate selected image/video providers behind server-side APIs; never expose provider keys in browser code.
+4. **Media pipeline:** upload handling, job queue, progress status, retries, storage, FFmpeg validation, and MP4 export.
+5. **Timeline editor:** draggable clips, scene duration, audio tracks, captions, transitions, and preview.
+6. **Brand and character continuity:** reusable character bibles, reference sets, approved UD🏀KA / YSL ENT branding, and shot-to-shot consistency checks.
+7. **Safety and cost controls:** provider-specific estimates, balance checks where available, explicit authorization before paid generation, and visible job status.
 
-This section is normative for an agent asked to install the plugin.
+## Security and production notes
 
-**Target**
-
-```yaml
-repository: https://github.com/Georgiejeff/vidmuse-plugin
-ref: main
-marketplace: udoks-plugin
-plugin: udoks-packaging
-marketplace_manifest: .agents/plugins/marketplace.json
-plugin_manifest: plugins/vidmuse-packaging/.codex-plugin/plugin.json
-```
-
-**Required procedure**
-
-1. Confirm that the host supports plugins. Use ChatGPT desktop with Codex or Codex CLI. Do not claim installation from an unsupported surface.
-2. Inspect the configured marketplaces with `codex plugin marketplace list`.
-3. If `udoks-plugin` is absent, run:
-
-   ```bash
-   codex plugin marketplace add Georgiejeff/vidmuse-plugin --ref main
-   ```
-
-   If it is already present, refresh it with:
-
-   ```bash
-   codex plugin marketplace upgrade udoks-plugin
-   ```
-
-4. Inspect availability with `codex plugin list --available --json`. Confirm that marketplace `udoks-plugin` exposes plugin `udoks-packaging`.
-5. If the plugin is not installed, run:
-
-   ```bash
-   codex plugin add udoks-packaging@udoks-plugin
-   ```
-
-6. Run `codex plugin list --json` and verify that `udoks-packaging@udoks-plugin` is installed and enabled. Base the report on command output, not assumption.
-7. Tell the user to start a new task or CLI session before first use. Provide the safe verification prompt below.
-
-**Completion criteria**
-
-- The `udoks-plugin` marketplace is configured from this repository's `main` ref.
-- `udoks-packaging@udoks-plugin` is reported as installed and enabled.
-- No repository clone is misreported as a plugin installation.
-- The user is told that first use must happen in a new task or session.
-- Any missing permissions, unavailable host capability, network failure, or authentication requirement is reported explicitly.
-
-**Safe first-use verification**
-
-In the new task, enter:
-
-```text
-$vidmuse Route this request only: I have an interview video and want a designed recut. Tell me which VidMuse workflow owns it and what input you need next. Do not create files, sign in, or spend credits.
-```
-
-A successful response should route the request to `vidmuse-recut`. After that check, describe the actual video you want to make.
-
-## Use VidMuse
-
-Describe the deliverable in ordinary language. The `vidmuse` router selects one owning workflow and loads focused capabilities as needed. In Codex, you can type `$vidmuse` to invoke the router explicitly. In ChatGPT, type `@` and select UDOKS Packaging when you want to force plugin selection.
-
-Example prompts:
-
-```text
-$vidmuse Create a 16:9 product launch film from https://example.com. Start by confirming the audience, destination, and duration.
-```
-
-```text
-$vidmuse Recut /absolute/path/interview.mp4 into a polished 16:9 founder video with readable captions and evidence-led graphics.
-```
-
-```text
-$vidmuse Create a complete AI music video from /absolute/path/song.wav. Use the whole song and confirm the treatment before generation.
-```
-
-```text
-$vidmuse Build a reusable illustrated mascot and use it to make a short knowledge video series.
-```
-
-```text
-$vidmuse Turn this script into a Vox-style editorial paper-collage film with narration-timed scenes.
-```
-
-For local files, provide absolute paths. For paid generation, the workflow should inspect live model pricing and the account balance before asking for authorization to spend credits.
-
-## How routing works
-
-| Your requested result | Owning skill |
-| --- | --- |
-| Film led by existing speaking footage | `vidmuse-recut` |
-| Film from an idea, script, URL, or non-speaking media | `vidmuse-create` |
-| Music-led generative film | `vidmuse-mv` |
-| Reusable character/IP or IP-led film | `vidmuse-ip` |
-| Vox-style paper-collage film | `vidmuse-vox` |
-| One transcript, voice, subtitle, or media artifact | `vidmuse-media` |
-| Timeline assembly, review, edit, or render | `vidmuse-timeline` |
-| Direct account, credits, model, voice, or CLI operation | `vidmuse-cli` |
-
-The router keeps a complete film under one owner. Design, motion, assets, media operations, HyperFrames, Shotcraft, and Timeline are loaded as supporting capabilities rather than competing workflows.
-
-## Authentication, permissions, and credits
-
-- Installing the plugin does not sign you into VidMuse.
-- Network-backed VidMuse operations use `https://vidmuse.ai`.
-- Login may pause for browser/device approval. The agent must not expose tokens or credentials.
-- Reading profile and credit balance is non-destructive.
-- Generative media can consume VidMuse credits. A workflow should show a live cost estimate and request authorization before paid execution.
-- Local preview servers should stay on loopback unless you explicitly request trusted network access.
-
-## Repository structure
-
-```text
-.
-├── .agents/plugins/marketplace.json     # Codex marketplace
-├── .claude-plugin/marketplace.json      # Claude marketplace
-├── plugins/vidmuse-packaging/
-│   ├── .codex-plugin/plugin.json        # Codex plugin manifest
-│   ├── .cursor-plugin/plugin.json       # Cursor plugin manifest
-│   ├── .claude-plugin/plugin.json       # Claude plugin manifest
-│   ├── assets/
-│   └── skills/                          # shared across Codex, Cursor, Claude
-├── CHANGELOG.md
-├── LICENSE
-└── README.md
-```
-
-- `.agents/plugins/marketplace.json` makes this repository an installable Codex marketplace.
-- `.claude-plugin/marketplace.json` makes this repository an installable Claude marketplace; it points Claude at `./plugins/vidmuse-packaging`.
-- Each host-specific `.codex-plugin/`, `.cursor-plugin/`, `.claude-plugin/` under `plugins/vidmuse-packaging/` describes the same plugin for that host's installer; all three resolve `skills/` to the same directory.
-- `skills/vidmuse/SKILL.md` is the top-level deliverable router.
-- The remaining skills own individual film workflows and production capabilities.
-
-## Updating or removing
-
-Refresh the marketplace snapshot, then reinstall from the plugin browser or CLI if an updated version is available:
-
-```bash
-codex plugin marketplace upgrade udoks-plugin
-```
-
-To remove the plugin:
-
-```bash
-codex plugin remove udoks-packaging@udoks-plugin
-```
-
-To remove the marketplace source as well:
-
-```bash
-codex plugin marketplace remove udoks-plugin
-```
+- The prototype does not send selected images to a server.
+- Do not add API keys, session tokens, or production credentials to frontend files or Git.
+- Add authentication, authorization, file validation, rate limits, and private storage before accepting user uploads.
+- Paid generation must show a current estimate and request confirmation before execution.
+- Clearly distinguish generated media, planning artifacts, and mock/demo content.
 
 ## License
 
-The repository is licensed under the [MIT License](LICENSE). Individual vendored assets or components may carry their own notices and licenses within the relevant skill directories.
+The original plugin assets and components remain subject to their existing license files and notices. Review third-party notices before redistributing or deploying them.

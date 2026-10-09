@@ -1,7 +1,7 @@
 {
   "name": "udoks-plugin",
   "interface": {
-    "displayName": "UDOKS Plugin"
+    "displayName": "UDOKS Animation Platform"
   },
   "plugins": [
     {

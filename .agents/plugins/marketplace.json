@@ -1,11 +1,11 @@
 {
-  "name": "vidmuse-plugin",
+  "name": "udoks-plugin",
   "interface": {
-    "displayName": "VidMuse Plugin"
+    "displayName": "UDOKS Plugin"
   },
   "plugins": [
     {
-      "name": "vidmuse-packaging",
+      "name": "udoks-packaging",
       "source": {
         "source": "local",
         "path": "./plugins/vidmuse-packaging"

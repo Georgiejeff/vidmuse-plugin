@@ -23,7 +23,9 @@
     <div class="navlabel">WORKSPACE</div>
     <nav class="nav" aria-label="Main navigation">
       <button class="active" data-page="dashboard"><span class="ico">◈</span>Dashboard</button>
-      <button data-page="create"><span class="ico">✦</span>Create</button>\n      <button data-page="image-motion"><span class="ico">▶</span>Animate Photo</button>
+      <button data-page="create"><span class="ico">✦</span>Create</button>
+      <button data-page="text-video"><span class="ico">▶</span>Text to Video</button>
+      <button data-page="image-motion"><span class="ico">▶</span>Animate Photo</button>
       <button data-page="storyboard"><span class="ico">▤</span>Storyboard</button>
       <button data-page="motion"><span class="ico">◉</span>Motion Studio</button>
       <button data-page="projects"><span class="ico">▦</span>My Projects</button>
@@ -104,7 +106,32 @@
       </div>
     </div>
   </section>
-  <section id="page-storyboard" class="section">
+
+  <section id="page-text-video" class="section">
+    <div class="heading"><div><div class="eyebrow">GENERATIVE VIDEO WORKSPACE</div><h1>Text to video</h1><p>Turn your idea into a structured cinematic generation brief. Provider generation is not connected yet; prepare and export your prompt now.</p></div><span class="motion-badge">PROMPT BUILDER · NO API KEY</span></div>
+    <div class="motion-layout">
+      <div class="panel">
+        <div class="panelhead"><div><h2>Describe your shot</h2><p>Write what should happen on screen, not just the visual style.</p></div></div>
+        <div class="field"><label for="tvPrompt">VIDEO PROMPT</label><textarea id="tvPrompt" rows="6" placeholder="A cinematic music-video shot of an artist standing in a rain-soaked futuristic Lagos street at night. Blue lightning pulses behind him as the camera slowly pushes in. Realistic skin, natural motion, dramatic reflections, premium film lighting."></textarea></div>
+        <div class="field"><label for="tvNegative">AVOID (OPTIONAL)</label><textarea id="tvNegative" rows="2" placeholder="Flickering face, distorted hands, extra fingers, unreadable text, sudden camera jumps"></textarea></div>
+        <div class="formrow"><div class="field"><label for="tvStyle">VISUAL STYLE</label><select id="tvStyle"><option>Cinematic ultra-realistic</option><option>Anime action</option><option>Luxury music video</option><option>Dark sci-fi</option><option>Fashion editorial</option><option>Dreamlike fantasy</option></select></div><div class="field"><label for="tvCamera">CAMERA</label><select id="tvCamera"><option>Slow cinematic push-in</option><option>Pull-back reveal</option><option>Tracking shot</option><option>Orbit around subject</option><option>Crane reveal</option><option>Locked-off shot</option><option>Handheld documentary</option></select></div></div>
+        <div class="formrow"><div class="field"><label for="tvDuration">DURATION</label><select id="tvDuration"><option value="4">4 seconds</option><option value="5">5 seconds</option><option value="6" selected>6 seconds</option><option value="8">8 seconds</option><option value="10">10 seconds</option></select></div><div class="field"><label for="tvRatio">ASPECT RATIO</label><select id="tvRatio"><option value="9:16">9:16 · TikTok/Reels</option><option value="16:9">16:9 · YouTube</option><option value="1:1">1:1 · Square</option><option value="4:5">4:5 · Portrait</option></select></div></div>
+        <div class="field"><label for="tvBrand">BRANDING / TITLE (OPTIONAL)</label><input id="tvBrand" placeholder="UD🏀KA · YSL ENT"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="primary" id="tvPrepare">✦ Prepare generation brief</button><button class="secondary" id="tvCopy">Copy prompt</button><button class="secondary" id="tvDownload">↓ Export brief JSON</button></div>
+        <div class="motion-status" id="tvStatus" role="status" aria-live="polite">Your prompt stays in this browser until you copy or export it.</div>
+      </div>
+      <div class="panel">
+        <div class="panelhead"><div><h2>Generation request</h2><p>Preview of the settings to send to a connected provider</p></div></div>
+        <div id="tvBriefPreview" class="brief" style="white-space:pre-wrap">Your prepared generation brief will appear here.</div>
+        <div style="margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025)">
+          <div class="eyebrow">GENERATION STATUS</div><h3 style="margin:7px 0">Provider not connected</h3><p style="font-size:12px;color:var(--muted)">This workspace currently prepares prompts and settings only. It does not send jobs to an AI model or produce an AI-generated video yet.</p>
+          <div class="fieldhint">To enable real generation, add a server backend and connect a video provider. Store the provider API key as a private server environment variable—not in this HTML file.</div>
+        </div>
+        <div style="margin-top:14px"><div class="eyebrow">PROMPT TIPS</div><ul style="padding-left:18px;color:var(--muted);font-size:12px;line-height:1.7"><li>Describe one clear action per shot.</li><li>Specify camera movement and lighting.</li><li>For characters, describe identity and wardrobe continuity.</li><li>Generate short clips first, then assemble them in the timeline.</li></ul></div>
+      </div>
+    </div>
+  </section>
+\n  <section id="page-storyboard" class="section">
     <div class="heading"><div><div class="eyebrow">SCENE DESIGN</div><h1>Storyboard & timeline</h1><p>Structure your animation into clear visual beats before production.</p></div><button class="primary" id="addScene">＋ Add scene</button></div>
     <div class="panel"><div class="panelhead"><div><h2 id="storyTitle">Power Awakening — 15-second sequence</h2><p id="storyMeta">Vertical 9:16 · Cinematic · UD🏀KA / YSL ENT</p></div><span class="pill" id="sceneCount">3 scenes</span></div><div class="timeline" id="timeline">
       <div class="scene"><div class="scenevisual">🌧</div><div><strong>01 · Establishing shot</strong><small>Rainy city, silhouette, atmospheric haze</small></div><time>0–4s</time></div>
@@ -146,7 +173,7 @@ let currentStyle='Cinematic',briefText='',projectCount=4,sceneNumber=3,projectRe
 {title:'Armor Evolution',desc:'Six looks · one identity',tag:'CHARACTER',ratio:'9:16',duration:'6 scenes',cls:'t3'},
 {title:'YSL ENT Intro',desc:'Logo reveal · light & smoke',tag:'BRAND FILM',ratio:'16:9',duration:'8 sec',cls:'t4'}];
 function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(window._toast);window._toast=setTimeout(()=>t.classList.remove('show'),3000)}
-function goto(page){$('.section').forEach(s=>s.classList.toggle('active',s.id==='page-'+page));$$('.nav button[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('#crumbtitle').textContent=({dashboard:'Dashboard',create:'Create animation',storyboard:'Storyboard & timeline',motion:'Motion Studio',projects:'My Projects',library:'Assets & Characters',export:'Export Center','image-motion':'Animate Photo'})[page]||page;if(page==='projects')renderProjects();window.scrollTo({top:0,behavior:'smooth'})}
+function goto(page){$('.section').forEach(s=>s.classList.toggle('active',s.id==='page-'+page));$$('.nav button[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('#crumbtitle').textContent=({dashboard:'Dashboard',create:'Create animation','text-video':'Text to video',storyboard:'Storyboard & timeline',motion:'Motion Studio',projects:'My Projects',library:'Assets & Characters',export:'Export Center','image-motion':'Animate Photo'})[page]||page;if(page==='projects')renderProjects();window.scrollTo({top:0,behavior:'smooth'})}
 $$('[data-page]').forEach(b=>b.addEventListener('click',()=>goto(b.dataset.page)));$$('[data-goto]').forEach(b=>b.addEventListener('click',()=>goto(b.dataset.goto)));
 $$('[data-style]').forEach(b=>b.addEventListener('click',()=>{$$('[data-style]').forEach(x=>x.classList.toggle('selected',x===b));currentStyle=b.dataset.style}));
 $$('[data-prompt]').forEach(b=>b.addEventListener('click',()=>{goto('create');$('#prompt').value=b.dataset.prompt;toast('Preset added to your animation prompt.')}));
@@ -180,5 +207,18 @@ renderProjects();
  $id('copyMotionPrompt').addEventListener('click',async()=>{const text=prompt.value.trim()||'Animate the supplied reference photo into a cinematic video. Preserve subject identity, face, hairstyle, skin tone, clothing, accessories, and body proportions. Use a '+move.options[move.selectedIndex].text.toLowerCase()+', '+duration.value+' seconds, '+ratio.value+' aspect ratio, realistic lighting, smooth natural motion, and no facial distortion.';prompt.value=text;try{await navigator.clipboard.writeText(text);status.textContent='AI video prompt copied. Paste it into an image-to-video provider.'}catch(e){status.textContent='Prompt prepared. Select and copy the text manually.'}});
 })();
 
-</script>
+
+/* Text-to-video brief builder. This does not submit to a generation provider. */
+(()=> {
+ const $id=id=>document.getElementById(id);
+ const prompt=$id('tvPrompt'),negative=$id('tvNegative'),style=$id('tvStyle'),camera=$id('tvCamera'),duration=$id('tvDuration'),ratio=$id('tvRatio'),brand=$id('tvBrand'),preview=$id('tvBriefPreview'),status=$id('tvStatus');
+ if(!prompt||!preview)return;
+ function brief(){return {product:"UDOKS Animation Platform",mode:"text-to-video",prompt:prompt.value.trim(),negative_prompt:negative.value.trim(),visual_style:style.value,camera_movement:camera.value,duration_seconds:Number(duration.value),aspect_ratio:ratio.value,branding:brand.value.trim(),provider_status:"not_connected",created_at:new Date().toISOString()}}
+ function show(){const b=brief();preview.textContent="PROMPT\n"+(b.prompt||"(Add a prompt describing your shot.)")+"\n\nAVOID\n"+(b.negative_prompt||"(Not specified)")+"\n\nSTYLE: "+b.visual_style+"\nCAMERA: "+b.camera_movement+"\nDURATION: "+b.duration_seconds+" seconds\nASPECT RATIO: "+b.aspect_ratio+"\nBRANDING: "+(b.branding||"None") +"\n\nSTATUS: Prepared locally — not sent to an AI provider.";return b}
+ $id('tvPrepare').addEventListener('click',()=>{if(!prompt.value.trim()){status.textContent='Add a video prompt first.';prompt.focus();return}show();status.textContent='Generation brief prepared. Real AI generation is unavailable until a provider backend is connected.'});
+ [prompt,negative,style,camera,duration,ratio,brand].forEach(el=>el.addEventListener('input',()=>{if(prompt.value.trim())show()}));
+ $id('tvCopy').addEventListener('click',async()=>{const b=show();const text=[b.prompt,'Visual style: '+b.visual_style,'Camera: '+b.camera_movement,'Duration: '+b.duration_seconds+' seconds','Aspect ratio: '+b.aspect_ratio,b.branding?'Branding: '+b.branding:'','Avoid: '+b.negative_prompt].filter(Boolean).join('\n');try{await navigator.clipboard.writeText(text);status.textContent='Prompt copied. Paste it into your chosen text-to-video service.'}catch(e){status.textContent='Prompt assembled in the preview. Select and copy it manually.'}});
+ $id('tvDownload').addEventListener('click',()=>{const b=show(),blob=new Blob([JSON.stringify(b,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='udoks-text-to-video-brief.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);status.textContent='Generation brief exported as JSON. No video was generated.'});
+})();
+\n</script>
 </body></html>

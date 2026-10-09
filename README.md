@@ -9,7 +9,9 @@ UDOKS is being shaped around the visual world of **UD🏀KA / YSL ENT**. This re
 Open `platform/index.html` in a browser to explore the responsive workspace prototype. It includes:
 
 - Dashboard with project cards and creative activity
-- Animation brief builder with prompt, style, camera move, duration, aspect ratio, brand text, and local image preview\n- **Animate Photo:** animate a supplied still image with camera moves and export a short browser-rendered WebM where supported\n- AI video prompt helper for pasting into a separately chosen image-to-video provider
+- Animation brief builder with prompt, style, camera move, duration, aspect ratio, brand text, and local image preview
+- **Animate Photo:** animate a supplied still image with camera moves and export a short browser-rendered WebM where supported
+- AI video prompt helper for pasting into a separately chosen image-to-video provider
 - Storyboard scene list with add-scene interaction
 - Motion Studio preset prompts for camera, effects, character movement, lighting, titles, and music
 - Asset and character continuity workspace

@@ -8,6 +8,7 @@ import http from 'node:http';
 const PORT = Number(process.env.PORT || 8787);
 const API_KEY = process.env.ANTHROPIC_API_KEY;
 const MODEL = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6';
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'https://react-starter-studio.onrender.com';
 const SYSTEM_PROMPT = `You are Udok, the creative companion inside the UDOKS Animation Platform for UD🏀KA / YSL ENT.
 Be calm, practical, encouraging, honest, and concise. Help with cinematic animation, shot planning, image-to-video prompts, music-video storyboards, character continuity, editing workflows, creative tools, and debugging.
 For animation requests, prefer a continuous sequence with clear geography, motivated camera movement, explicit actions, and consistent identity/wardrobe. Structure useful briefs with: concept, aspect ratio, duration, shot sequence, camera, lighting, continuity notes, sound, and final frame.
@@ -45,6 +46,26 @@ function rateLimited(req) {
   return recent.length > 20;
 }
 const server = http.createServer(async (req, res) => {
+  // Allow browser access only from the configured frontend origin.
+  // CORS is not authentication; add user auth/stronger abuse controls before broad public use.
+  const origin = req.headers.origin;
+  if (origin && origin !== FRONTEND_ORIGIN) {
+    return sendJson(res, 403, { error: 'Origin not allowed.' });
+  }
+  if (origin === FRONTEND_ORIGIN) {
+    res.setHeader('Access-Control-Allow-Origin', FRONTEND_ORIGIN);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  }
+  if (req.method === 'OPTIONS') {
+    if (origin !== FRONTEND_ORIGIN) {
+      return sendJson(res, 403, { error: 'Origin not allowed.' });
+    }
+    res.writeHead(204);
+    return res.end();
+  }
+
   if (req.method === 'GET' && req.url === '/api/health') return sendJson(res, 200, { ok: true, service: 'udok-companion' });
   if (req.method !== 'POST' || req.url !== '/api/udok/chat') {
     res.writeHead(404, { 'content-type': 'application/json; charset=utf-8' });
@@ -82,4 +103,4 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, err.status || 500, { error: err.status ? err.message : 'Unexpected server error.' });
   }
 });
-server.listen(PORT, () => console.log('Udok API listening on port ' + PORT));
+server.listen(PORT, '0.0.0.0', () => console.log('Udok API listening on port ' + PORT));

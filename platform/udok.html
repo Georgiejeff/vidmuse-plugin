@@ -42,6 +42,8 @@ form{display:flex;gap:10px;padding:14px;border-top:1px solid var(--line)}textare
 <script>
 (()=> {
   const KEY='udoks:udok:messages:v1', chat=document.getElementById('chat'), form=document.getElementById('form'), input=document.getElementById('input'), send=document.getElementById('send'), status=document.getElementById('status');
+  // Configured API origin supplied for the current Render setup. Keep provider secrets on the server.
+  const API_BASE_URL = 'https://react-starter-studio.onrender.com';
   const welcome={role:'assistant',content:"Hey, I'm Udok — your creative partner inside UDOKS. I can help shape cinematic scenes, keep your character consistent, plan UD🏀KA music videos, write generation prompts, and troubleshoot the studio. I’ll be clear about what the platform can plan versus what requires a connected AI video provider. What are we creating today? 🏀"};
   let messages=[];
   try { const saved=JSON.parse(localStorage.getItem(KEY)||'[]'); messages=Array.isArray(saved)&&saved.length?saved:[welcome]; } catch { messages=[welcome]; }
@@ -54,7 +56,7 @@ form{display:flex;gap:10px;padding:14px;border-top:1px solid var(--line)}textare
     messages.push({role:'user',content:text});render(messages[messages.length-1]);save();input.value='';input.style.height='auto';send.disabled=true;status.textContent='Udok is preparing a reply…';
     const typing={role:'assistant',content:'Thinking…'};render(typing);
     try{
-      const response=await fetch('/api/udok/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:messages.filter(m=>m.role==='user'||m.role==='assistant').slice(-20)})});
+      const response=await fetch(`${API_BASE_URL}/api/udok/chat`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:messages.filter(m=>m.role==='user'||m.role==='assistant').slice(-20)})});
       let data={};try{data=await response.json()}catch{}
       if(!response.ok)throw new Error(data.error||('Request failed ('+response.status+').'));
       if(typeof data.reply!=='string'||!data.reply.trim())throw new Error('The server returned an empty reply.');
